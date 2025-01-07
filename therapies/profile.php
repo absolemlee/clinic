@@ -1,25 +1,25 @@
 <?php
   require_once "../includes/initiate.php";
-  page_permission("medicine_profile");	
+  page_permission("therapy_profile");	
 
 	if(isset($_GET['id'])){$id=$_GET['id'];}
-	if(isset($_GET['delete'])){ medicine_delete($id); 	
+	if(isset($_GET['delete'])){ therapy_delete($id); 	
   	print "<script>";
-  	print "self.location='../medicines/?deleted';"; 
+  	print "self.location='../therapies/?deleted';"; 
     print "</script>";
  	}
 
-  sns_header('Medicine Profile');
-  $medicine=mysqli_fetch_object(mysqli_query($con, "select * from p_medicine_dir where id='$id' "));
+  sns_header('Therapy Profile');
+  $therapy=mysqli_fetch_object(mysqli_query($con, "select * from p_therapy_dir where id='$id' "));
 ?>
 
-<div id="medicine-profile" class="container page">
+<div id="therapy-profile" class="container page">
 <div class="panel panel-default">
-  <div class="panel-heading theme-medicines"><span class="inlineicon medicine-mini"><?php echo $medicine->code;?></span></div>
+  <div class="panel-heading theme-therapies"><span class="inlineicon therapy-mini"><?php echo $therapy->code;?></span></div>
 <div class="panel-body">
-<ol class="breadcrumb link-medicines">
+<ol class="breadcrumb link-therapies">
   <li><a href="../dashboard"><i class="glyphicon glyphicon-home"></i>Home</a></li>
-  <li><a href="../medicines/">Medicine Directory</a></li>
+  <li><a href="../therapies/">Therapy Directory</a></li>
   <li class="active">Profile</li>
 </ol>
 
@@ -30,9 +30,9 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['-', '<?php echo $medicine->code;?> Usage'],
+          ['-', '<?php echo $therapy->code;?> Usage'],
           <?php $get_diff = get_global('recent_hours')/24;  for ($k = 0 ; $k < get_global('recent_hours'); $k++){ $k = $k+$get_diff;?>
-          ['-',  <?php echo prescribe_count($medicine->code,$k);?>],
+          ['-',  <?php echo session_count($therapy->code,$k);?>],
           <?php } ?>
         ]);
 
@@ -74,17 +74,17 @@
 
 <table class="table table-striped"><tbody>
 
-    <tr><td>Database ID:</td><td><?php echo $medicine->id;?></td></tr>
-    <tr><td>Medicine Code:</td><td><?php echo $medicine->code;?></td></tr>
-    <tr><td>Category:</td><td><?php echo $medicine->category;?></td></tr>
-    <tr><td>Name:</td><td><?php echo $medicine->name;?></td></tr>
-    <tr><td>Price:</td><td><?php echo $medicine->price.' '.get_global('currency');?></td></tr>
-    <tr><td>Prescribed:</td><td><?php echo prescribe_count($medicine->code,get_global('recent_hours'));?> time(s) in last <?php echo show_recent_hours();?></td></tr>
+    <tr><td>Database ID:</td><td><?php echo $therapy->id;?></td></tr>
+    <tr><td>Therapy Code:</td><td><?php echo $therapy->code;?></td></tr>
+    <tr><td>Category:</td><td><?php echo $therapy->category;?></td></tr>
+    <tr><td>Name:</td><td><?php echo $therapy->name;?></td></tr>
+    <tr><td>Price:</td><td><?php echo $therapy->price.' '.get_global('currency');?></td></tr>
+    <tr><td>Scheduled:</td><td><?php echo session_count($therapy->code,get_global('recent_hours'));?> session(s) in last <?php echo show_recent_hours();?></td></tr>
 
 </tbody></table><br>
 
-	<div class="edit-button"><a class="btn btn-default formbutton theme-medicines" href="edit.php?id=<?php echo $medicine->id;?>&delete=1">Edit Profile</a></div>
-  <div id="page-clear" align="center"><div id="deleteButton"><a  class="delete-me" href="?id=<?php echo $medicine->id;?>&delete=1">Delete Medicine</a></div></div>
+	<div class="edit-button"><a class="btn btn-default formbutton theme-therapies" href="edit.php?id=<?php echo $therapy->id;?>">Edit Profile</a></div>
+  <div id="page-clear" align="center"><div id="deleteButton"><a  class="delete-me" href="?id=<?php echo $therapy->id;?>&delete=1">Delete Therapy</a></div></div>
 
 </div>
 </div> <!-- panel panel-default -->
