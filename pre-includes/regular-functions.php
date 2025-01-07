@@ -28,13 +28,14 @@ function get_global($query){
 
 
 function soft_singout(){
+        session_unset(); /*
 	session_unset("id");
 	session_unset("branch");
 	session_unset("session_id");
 	session_unset("today");
 	session_unset("access_level");
 	session_unset("last_update");
-	session_unset("unique_code");
+	session_unset("unique_code");*/
 }
 
 
