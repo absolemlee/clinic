@@ -1,18 +1,18 @@
 <?php
 	require_once "../includes/initiate.php";
 	page_permission("update_stock");
-	sns_header('Update Stock');
+	sns_header('Update Therapy');
 	
 ?>
 
 <div id="update-stock" class="container page">
 <div class="panel panel-default">
-<div class="panel-heading theme-medicines"><span class="inlineicon edit-mini">Update Stock</span></div>
+<div class="panel-heading theme-medicines"><span class="inlineicon edit-mini">Update Therapy</span></div>
 <div class="panel-body">
 <ol class="breadcrumb link-medicines">
   <li><a href="../dashboard"><i class="glyphicon glyphicon-home"></i>Home</a></li>
-  <li><a href="../medicines/">Medicine Directory</a></li>
-  <li class="active">Update Stock</li>
+  <li><a href="../therapies/">Therapy Directory</a></li>
+  <li class="active">Update Therapy</li>
 </ol>
 
 <?php
@@ -23,9 +23,9 @@ if(isset($_POST['submit'])){
 	$addidtion=friendly($_POST['addidtion']);
 	$addidtion=preg_replace("/[^0-9\s]/", "", $addidtion);
 	$branch_name=branch_info("name",$branch);
-	if(update_stock($branch,$code,$addidtion)==true){
-	echo"<div class='alert alert-success' role='alert'>Stock for $branch_name has been successfully updated with $addidtion dose(s) of $code!</div>";
-	write_log("$_SESSION[id]","updated Stock for $branch_name with $addidtion doses of $code","stock","40");
+	if(update_therapy($branch,$code,$addidtion)==true){
+	echo"<div class='alert alert-success' role='alert'>Therapy for $branch_name has been successfully updated with $addidtion dose(s) of $code!</div>";
+	write_log("$_SESSION[id]","updated Therapy for $branch_name with $addidtion sessions of $code","therapy","40");
 	}else{
 	echo"<div class='alert alert-danger' role='alert'>Something went wrong. Please try again!</div>";
 	}
@@ -43,16 +43,16 @@ if(isset($_POST['submit'])){
 	<?php }?>
     </select></div>
 
-	<div class="form-group"><label>Medicine:</label><select class="form-control" name='code'  id='code' size='1' tabindex='1'>
+	<div class="form-group"><label>Therapy:</label><select class="form-control" name='code'  id='code' size='1' tabindex='1'>
 	<?php 
-	$sql=mysqli_query($con, "select * from p_medicine_dir order by last_update desc limit 9000")or die(mysqli_error());
-	while($medicines=mysqli_fetch_array($sql)){
+	$sql=mysqli_query($con, "select * from p_therapy_dir order by last_update desc limit 9000")or die(mysqli_error());
+	while($therapy=mysqli_fetch_array($sql)){
 	?>
-	<option value='<?php echo $medicines['code']?>'><?php echo $medicines['code']?> (<?php echo $medicines['name']?>)</option>
+	<option value='<?php echo $therapy['code']?>'><?php echo $therapy['code']?> (<?php echo $therapy['name']?>)</option>
 	<?php }?>
     </select></div>	
 	
-	<div class="form-group"><label>Dose(s):</label><input class="form-control" name="addidtion" type="text" maxlength="4" /></li>
+	<div class="form-group"><label>Sessions(s):</label><input class="form-control" name="addidtion" type="text" maxlength="4" /></li>
 	<input name="submit" class="btn btn-default formbutton theme-medicines" name="submit" class="formbutton medicine" type="submit" value="Update">
 </form>    
 
