@@ -1,15 +1,15 @@
 <?php
 	require_once "../includes/initiate.php";
-	page_permission("update_stock");
+	page_permission("update_therapy");
 	sns_header('Update Therapy');
 	
 ?>
 
-<div id="update-stock" class="container page">
+<div id="update-therapy" class="container page">
 <div class="panel panel-default">
-<div class="panel-heading theme-medicines"><span class="inlineicon edit-mini">Update Therapy</span></div>
+<div class="panel-heading theme-therapies"><span class="inlineicon edit-mini">Update Therapy</span></div>
 <div class="panel-body">
-<ol class="breadcrumb link-medicines">
+<ol class="breadcrumb link-therapies">
   <li><a href="../dashboard"><i class="glyphicon glyphicon-home"></i>Home</a></li>
   <li><a href="../therapies/">Therapy Directory</a></li>
   <li class="active">Update Therapy</li>
@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
 	$addidtion=preg_replace("/[^0-9\s]/", "", $addidtion);
 	$branch_name=branch_info("name",$branch);
 	if(update_therapy($branch,$code,$addidtion)==true){
-	echo"<div class='alert alert-success' role='alert'>Therapy for $branch_name has been successfully updated with $addidtion dose(s) of $code!</div>";
+	echo"<div class='alert alert-success' role='alert'>Therapy for $branch_name has been successfully updated with $addidtion session(s) of $code!</div>";
 	write_log("$_SESSION[id]","updated Therapy for $branch_name with $addidtion sessions of $code","therapy","40");
 	}else{
 	echo"<div class='alert alert-danger' role='alert'>Something went wrong. Please try again!</div>";
@@ -50,10 +50,10 @@ if(isset($_POST['submit'])){
 	?>
 	<option value='<?php echo $therapy['code']?>'><?php echo $therapy['code']?> (<?php echo $therapy['name']?>)</option>
 	<?php }?>
-    </select></div>	
+    </select></div> 	
 	
-	<div class="form-group"><label>Sessions(s):</label><input class="form-control" name="addidtion" type="text" maxlength="4" /></li>
-	<input name="submit" class="btn btn-default formbutton theme-medicines" name="submit" class="formbutton medicine" type="submit" value="Update">
+	<div class="form-group"><label>Session(s):</label><input class="form-control" name="addidtion" type="text" maxlength="4" /></li>
+	<input name="submit" class="btn btn-default formbutton theme-therapies" type="submit" value="Update">
 </form>    
 
 </div>
